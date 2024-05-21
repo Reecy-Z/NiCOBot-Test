@@ -11,7 +11,6 @@ from NiCOBot.agents import NiCOBot
 from NiCOBot.frontend.streamlit_callback_handler import StreamlitCallbackHandlerChem
 from NiCOBot.tools import *
 
-
 os.environ['OPENAI_API_BASE'] = 'https://api.openai.com/v1'
 ss = st.session_state
 
