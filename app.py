@@ -87,7 +87,7 @@ with st.sidebar:
     st.image(NiCOBot_logo)
 
     # Input OpenAI api key
-    st.markdown("Input your OpenAI API key.")
+    st.markdown("Input your API key.")
     st.text_input(
         "API key",
         type="password",
