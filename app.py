@@ -11,7 +11,8 @@ from NiCOBot.agents import NiCOBot
 from NiCOBot.frontend.streamlit_callback_handler import StreamlitCallbackHandlerChem
 from NiCOBot.tools import *
 
-os.environ['OPENAI_API_BASE'] = 'https://api.openai.com/v1'
+os.environ['OPENAI_API_BASE'] = 'https://api.deepseek.com/v1'
+os.environ['MODEL'] = 'deepseek-chat'
 ss = st.session_state
 
 
@@ -22,8 +23,9 @@ def LLM_chain_response():
     memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history")
     # memory = ConversationBufferMemory(memory_key="chat_history")
     agent = NiCOBot(
-        # tools,
-        model="gpt-4-turbo",
+        tools,
+        model=os.environ['MODEL'],
+        tools_model=os.environ['MODEL'],
         openai_api_key=ss.get("api_key"),
         temp=0.1,
         memory=memory,
@@ -75,6 +77,8 @@ st.markdown(
 def on_api_key_change():
     api_key = ss.get("api_key") or os.getenv("OPENAI_API_KEY")
     os.environ["OPENAI_API_KEY"] = api_key
+    # Clear the cached agent when API key changes
+    LLM_chain_response.clear()
 
 
 # sidebar
@@ -85,7 +89,7 @@ with st.sidebar:
     # Input OpenAI api key
     st.markdown("Input your OpenAI API key.")
     st.text_input(
-        "OpenAI API key",
+        "API key",
         type="password",
         key="api_key",
         on_change=on_api_key_change,
