@@ -1,7 +1,5 @@
 from langchain.tools import BaseTool
 
-# from generate_candidate_reactions import generate_product, save_images
-from generate_candidate_reactions import generate_product
 
 class Query2ReactionSimilarity(BaseTool):
     name = "Query2ReactionSimilarity"
@@ -12,6 +10,8 @@ class Query2ReactionSimilarity(BaseTool):
     
     def _run(self, query: str) -> str:
         try:
+            from generate_candidate_reactions import generate_product
+
             response = generate_product(query)
             # save_images(response, 'similarity_reactions_E_Nu_Connected')
             return response
